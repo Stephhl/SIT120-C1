@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIT120 - C1 (Q1)</title>
+
+    <script src="https://unpkg.com/vue@3"></script>
+</head>
+
+<body>
+
+    <div id="app">
+        <h1>{{message}}</h1>
+        <h3 v-show="show">Hello! I'm appearing because I'm set to true!</h3>
+
+        <div>
+            <input type="text" v-model="usernum" />
+            <p v-if="usernum == 0">Number is zero</p>
+            <p v-else-if="usernum == 1">Number is one</p>
+            <p v-else-if="usernum == 2">Number is two</p>
+            <p v-else>Number needs to be between 0-2</p>
+        </div>
+
+        <hr>
+
+        <div>
+            <ul>
+                <li v-for="fruit in fruits">{{fruit.type}} = {{fruit.state}}</li>
+            </ul>
+        </div>
+
+        <hr>
+
+        <div>
+            <ul>
+                <li v-for="fruit in filteredFruits" :key="fruit.type">
+                    {{ fruit.type }} = {{fruit.state}}
+                </li>
+            </ul>
+        </div>
+
+        <hr>
+
+        <div>
+            <h2>Character counter</h2>
+            <input type="text" v-model="userinput" />
+            <p>{{userinput}} ({{userinput.length}})</p>
+        </div>
+
+        <hr>
+
+        <div>
+            <input type="checkbox" id="checkbox" v-model="checked" />
+            <label for="checkbox">{{checked}}</label>
+        </div>
+
+        <hr>
+
+        <div>
+            <h2>Best pet: {{picked}}</h2>
+            <input type="radio" id="cat" value="Cat" v-model="picked" />
+            <label for="cat">Cat</label>
+
+            <input type="radio" id="dog" value="Dog" v-model="picked" />
+            <label for="dog">Dog</label>
+        </div>
+
+    </div>
+
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                    message: "Hello",
+                    userinput: "",
+                    checked: false,
+                    picked: "",
+                    usernum: "",
+                    show: true,
+                    fruits: [
+                        { type: "Apple", state: true },
+                        { type: "Banana", state: false },
+                        { type: "Kiwi", state: true }
+                    ]
+                };
+            },
+            computed: {
+                filteredFruits() {
+                    return this.fruits.filter(fruit => fruit.state);
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+
+</html>

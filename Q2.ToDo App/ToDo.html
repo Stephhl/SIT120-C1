@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIT120 - C1 (Q2)</title>
+    
+    <script src="https://unpkg.com/vue@3"></script>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; 
+            min-height: 100vh;
+            background-color: #aeafaa;
+        }
+
+        .todo-container {
+            background-color: rgb(145, 221, 3);
+            border-radius: 20px;
+            padding: 100px;
+        }
+
+        .todo-app {
+            max-width: 400px;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        .completed {
+            text-decoration: line-through;
+            color: #888;
+        }
+
+        button {
+            margin-left: 10px;
+            padding: 5px 10px;
+            background-color: #f44336;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+        .clearCompleted-button {
+            margin-top: 20px;
+            background-color: rgb(236, 166, 36);
+            font-weight: bold;
+        }
+        .clearCompleted-button:hover {
+            background-color: rgb(194, 19, 63);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="todo-container">
+        <div class="todo-app">
+            <h1 style="text-decoration: underline;">Todo App</h1>
+            <input v-model="newTask" @keyup.enter="addTask" placeholder="Enter a new task">
+            <ul>
+                <li v-for="(task, index) in tasks" :key="index">
+                    <input type="checkbox" v-model="task.completed">
+                    <span :class="{ completed: task.completed }">{{ task.text }}</span>
+                    <button @click="removeTask(index)">Remove</button>
+                </li>
+            </ul>
+            <button class="clearCompleted-button"@click="clearCompleted">Clear All Completed</button>
+        </div>
+    </div>
+
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                    newTask: '',
+                    tasks: []
+                };
+            },
+            methods: {
+                addTask() {
+                    if (this.newTask.trim() !== '') {
+                        this.tasks.push({
+                            text: this.newTask,
+                            completed: false
+                        });
+                        this.newTask = '';
+                    }
+                },
+                removeTask(index) {
+                    this.tasks.splice(index, 1);
+                },
+                clearCompleted() {
+                    this.tasks = this.tasks.filter(task => !task.completed);
+                },
+            }
+        }).mount(".todo-app");
+    </script>
+</body>
+
+</html>
